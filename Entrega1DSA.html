@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Buscador de repositorios de Github</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<!--Jquery script-->
+	<script>
+		$(document).ready(function(){
+			$("#btn1").click(function(){
+				var uri="https://api.github.com/users/";
+				var nombre = $('#usr').val();
+				var consulta = uri + nombre + "/repos";
+				$.getJSON(consulta, function(result){
+					$.each(result, function(i, field){
+            			$("#mitabla").append('<tr><td>'+result[i].name +'</td><td>'+result[i].description+'</td><td>'+result[i].watchers+'</td></tr');
+        			});
+				});
+			});
+			$("#btnLimpiar").click(function(){
+				$('#mitabla tbody').empty();
+			});
+		});
+	</script>
+	</head>
+	<body>
+		<head>
+
+			<div class="container">
+				<div class="jumbotron">
+					<h1>Buscador de repositorios de Github</h1> 
+					<p>Introduce el nombre de usuario de Github del que quieres buscar los repositorios:</p> 
+				</div>
+
+				<div id=nombreUs class="nombreUsuario">
+					<label for="usr">Nombre:</label>
+					<input type="text" class="nombreUsuario" id="usr">
+					<!--Usuario introduce su nombre -->
+				</div>
+				<!--Boton para llamar a la api -->
+
+				<button id=btn1 type="button" class="btn btn-primary btn-lg">Buscar</button>
+				<!--Boton de prueb -->
+				<button id=btnLimpiar type="button" class="btn btn-primary btn-lg">Borrar</button>
+
+			</div>    
+		</head>    
+
+		<!-- Aqui pondremos las repos que tiene-->
+		<div class="container2">
+			<table id=mitabla class="table">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Descripción</th>
+						<th>Seguidores</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+
+	</body>
+	</html>
